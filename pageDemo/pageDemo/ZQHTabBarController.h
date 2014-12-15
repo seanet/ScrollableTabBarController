@@ -23,6 +23,10 @@
 @property (weak,nonatomic,readonly) UIView *separateLine;
 
 @property (assign,nonatomic,getter=isNavigationBarHidden) BOOL navigationBarHidden;
+@property (assign,nonatomic,getter=isTabBarItemAnimatableWhenClick) BOOL tabBarItemAnimatableWhenClicked; //fade or not fade when clicked, default is NO
+@property (assign,nonatomic,getter=isTabBarItemAnimatableWhenScroll) BOOL tabBarItemAnimatableWhenScrolled; //fade or not fade when scrolled, default is NO
+@property (assign,nonatomic,getter=isTitleChangedAutomatically) BOOL titleChangedAutomatically;
+@property (assign,nonatomic,getter=isScrollEnabled) BOOL scrollEnabled; //the scroll view can ben scrolled, default is NO;
 
 @end
 

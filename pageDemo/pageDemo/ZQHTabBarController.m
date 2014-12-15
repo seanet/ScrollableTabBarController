@@ -26,28 +26,35 @@
 
 @interface ZQHTabBarController(){
     int willTransitionPage;
-    int beginDragPage;
+    int currentDragPage;
+    int temp;
+    
+    BOOL isLoadedForSystemVersion7;
+    
+    __weak ZQHTabBarItem *fromItem;
+    __weak ZQHTabBarItem *toItem;
 }
 
 @property (weak,nonatomic)UIScrollView *scrollView;
 @property (weak,nonatomic)UIView *tabBar;
 @property (weak,nonatomic)UIWindow *window;
 
+@property (assign,nonatomic,getter=isTabBarHidden) BOOL tabBarHidden;
+
 @end
+
+static CGFloat systemVersion;
 
 @implementation ZQHTabBarController
 
 @synthesize tabBarItems=_tabBarItems,controllers=_controllers;
 @synthesize scrollView=_scrollView,tabBar=_tabBar,separateLine=_separateLine;
-@synthesize navigationBarHidden=_navigationBarHidden;
+@synthesize navigationBarHidden=_navigationBarHidden,tabBarItemAnimatableWhenClicked=_tabBarItemAnimatableWhenClicked,tabBarItemAnimatableWhenScrolled=_tabBarItemAnimatableWhenScrolled,titleChangedAutomatically=_titleChangedAutomatically,tabBarHidden=_tabBarHidden,scrollEnabled=_scrollEnabled;
 
 #pragma mark - View lifecycle
 
-- (void)viewDidAppear:(BOOL)animated{
-    [super viewDidAppear:animated];
-    
+-(void)viewDidLoad{
     self.view.backgroundColor=[UIColor whiteColor];
-    self.navigationBarHidden=_navigationBarHidden;
     [self setEdgesForExtendedLayout:UIRectEdgeNone];
     
     if(!self.controllers) return;
@@ -58,13 +65,41 @@
     _scrollView=[self.view.subviews objectAtIndex:0];
     [_scrollView setDelegate:self];
     
+    [_scrollView setScrollEnabled:_scrollEnabled];
+    
+    systemVersion=[[[UIDevice currentDevice]systemVersion]floatValue];
+    if(systemVersion>8.0)
+       [self prepare];
+    
+    UIViewController *firstVC=[_controllers objectAtIndex:0];
+    
+    if(_titleChangedAutomatically)
+        [[NSOperationQueue mainQueue]addOperationWithBlock:^{
+            if(firstVC.navigationItem.title) [self.navigationItem setTitle:firstVC.navigationItem.title];
+        }];
+    
+    [self setViewControllers:[NSArray arrayWithObjects:firstVC, nil] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    self.navigationBarHidden=_navigationBarHidden;
+}
+
+-(void)viewDidAppear:(BOOL)animated{
+    self.tabBarHidden=NO;
+    if(systemVersion<8.0&&!isLoadedForSystemVersion7){
+        isLoadedForSystemVersion7=YES;
+        [self prepare];
+    }
+}
+
+-(void)viewDidDisappear:(BOOL)animated{
+    self.tabBarHidden=YES;
+}
+
+-(void)prepare{
     [self prepareConstraints];
     [self prepareTabBarItems];
-    
-    UIViewController *vc=[_controllers objectAtIndex:0];
-    self.view.backgroundColor=vc.view.backgroundColor;
-    
-    [self setViewControllers:[NSArray arrayWithObjects:[_controllers objectAtIndex:0], nil] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
 }
 
 -(void)prepareConstraints{
@@ -126,20 +161,49 @@
     }
 }
 
+-(void)setTabBarHidden:(BOOL)tabBarHidden{
+    _tabBarHidden=tabBarHidden;
+    if(tabBarHidden){
+        NSLayoutConstraint *c=[_window.constraints objectAtIndex:1];
+        [c setConstant:0];
+        [UIView animateWithDuration:0.3 animations:^{
+            CATransform3D translation=CATransform3DMakeTranslation(0, 49, 0);
+            [_tabBar.layer setTransform:translation];
+        }];
+    }else{
+        [UIView animateWithDuration:0.3 animations:^{
+            CATransform3D translation=CATransform3DMakeTranslation(0, 0, 0);
+            [_tabBar.layer setTransform:translation];
+        }completion:^(BOOL finished){
+            NSLayoutConstraint *c=[_window.constraints objectAtIndex:1];
+            [c setConstant:49];
+        }];
+    }
+}
+
+-(void)setScrollEnabled:(BOOL)scrollEnabled{
+    _scrollEnabled=scrollEnabled;
+    [_scrollView setScrollEnabled:_scrollEnabled];
+}
+
 -(void)itemClick:(NSNumber *)number{
     int index=[number intValue];
     ZQHTabBarItem *chosen=[_tabBarItems objectAtIndex:index];
     for(ZQHTabBarItem *item in _tabBarItems){
+        [CATransaction begin];
+        [CATransaction setDisableActions:!self.tabBarItemAnimatableWhenClicked];
         if(item==chosen) item.ratio=1;
         else item.ratio=0;
+        [CATransaction commit];
     }
     
     if(index>=_controllers.count) return;
     UIViewController *vc=[_controllers objectAtIndex:index];
     [self setViewControllers:[NSArray arrayWithObjects:vc, nil] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
-    self.view.backgroundColor=vc.view.backgroundColor;
+    if(_titleChangedAutomatically)
+        [self.navigationItem setTitle:vc.navigationItem.title];
     
-    beginDragPage=index;
+    currentDragPage=index;
     willTransitionPage=index;
 }
 
@@ -172,16 +236,16 @@
 -(void)pageViewController:(UIPageViewController *)pageViewController willTransitionToViewControllers:(NSArray *)pendingViewControllers{
     UIViewController *pendingVC=[pendingViewControllers objectAtIndex:0];
     willTransitionPage=(int)[_controllers indexOfObject:pendingVC];
-    self.view.backgroundColor=pendingVC.view.backgroundColor;
 }
 
 -(void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed{
     if(!completed){
-        UIViewController *previousVC=[previousViewControllers objectAtIndex:0];
-        self.view.backgroundColor=previousVC.view.backgroundColor;
+        willTransitionPage=currentDragPage;
         return;
     }
-    beginDragPage=willTransitionPage;
+    UIViewController *vc=[_controllers objectAtIndex:willTransitionPage];
+    if(vc.navigationItem.title&&_titleChangedAutomatically) [self.navigationItem setTitle:vc.navigationItem.title];
+    currentDragPage=willTransitionPage;
 }
 
 -(void)drawLayer:(CALayer *)layer inContext:(CGContextRef)ctx{
@@ -201,30 +265,42 @@
 #pragma mark - uiscrollview delegate
 
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    if(!self.tabBarItemAnimatableWhenScrolled) return;
+    
+    if(willTransitionPage!=currentDragPage) temp=willTransitionPage;
     CGFloat r=scrollView.contentOffset.x/[UIScreen mainScreen].bounds.size.width-1;
-    if(fabsf(r)>1||r==0||beginDragPage==willTransitionPage) return;
-    if(willTransitionPage==_tabBarItems.count||beginDragPage==_tabBarItems.count) return;
+    if(fabsf(r)>1||r==0||currentDragPage==temp) return;
+    if(temp==_tabBarItems.count||currentDragPage==_tabBarItems.count) return;
     
     r=fabs(r);
     
-    ZQHTabBarItem *fromItem=[_tabBarItems objectAtIndex:beginDragPage];
-    ZQHTabBarItem *toItem=[_tabBarItems objectAtIndex:willTransitionPage];
+    fromItem=[_tabBarItems objectAtIndex:currentDragPage];
+    toItem=[_tabBarItems objectAtIndex:temp];
+    
+    if(r<=0.5) willTransitionPage=currentDragPage;
+    else willTransitionPage=temp;
     
     [CATransaction begin];
     [CATransaction setDisableActions:YES];
-    
     fromItem.ratio=1-r;
     toItem.ratio=r;
-    
     [CATransaction commit];
 }
 
 -(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
     for(int i=0;i<_tabBarItems.count;i++){
         ZQHTabBarItem *item=[_tabBarItems objectAtIndex:i];
-        if(i==beginDragPage) item.ratio=1;
+        if(i==currentDragPage) item.ratio=1;
         else item.ratio=0;
     }
+}
+
+-(void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset{
+    if(!self.tabBarItemAnimatableWhenScrolled) return;
+    if(currentDragPage==willTransitionPage) return;
+    if(willTransitionPage==_tabBarItems.count||currentDragPage==_tabBarItems.count) return;
+    fromItem.ratio=0;
+    toItem.ratio=1;
 }
 
 @end

@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9963BAC91A3E7999004694DC /* PanBackNavController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9963BAC81A3E7999004694DC /* PanBackNavController.m */; };
+		9963BACD1A3E79F6004694DC /* Animator.m in Sources */ = {isa = PBXBuildFile; fileRef = 9963BACC1A3E79F6004694DC /* Animator.m */; };
+		99C2A2C21A3EB51900DF46F3 /* SecondVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 99C2A2C01A3EB51900DF46F3 /* SecondVC.m */; };
+		99C2A2C31A3EB51900DF46F3 /* SecondVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99C2A2C11A3EB51900DF46F3 /* SecondVC.xib */; };
+		99C2A2C91A3EB56B00DF46F3 /* ThirdVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 99C2A2C71A3EB56B00DF46F3 /* ThirdVC.m */; };
+		99C2A2CA1A3EB56B00DF46F3 /* ThirdVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99C2A2C81A3EB56B00DF46F3 /* ThirdVC.xib */; };
 		99C403BE1A382A370057E62C /* BlueViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 99C403BC1A382A370057E62C /* BlueViewController.m */; };
 		99C403BF1A382A370057E62C /* BlueViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99C403BD1A382A370057E62C /* BlueViewController.xib */; };
 		99C403C51A382A570057E62C /* RedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 99C403C31A382A570057E62C /* RedViewController.m */; };
@@ -52,6 +58,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9963BAC71A3E7999004694DC /* PanBackNavController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PanBackNavController.h; sourceTree = "<group>"; };
+		9963BAC81A3E7999004694DC /* PanBackNavController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PanBackNavController.m; sourceTree = "<group>"; };
+		9963BACB1A3E79F6004694DC /* Animator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Animator.h; sourceTree = "<group>"; };
+		9963BACC1A3E79F6004694DC /* Animator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Animator.m; sourceTree = "<group>"; };
+		99C2A2BF1A3EB51900DF46F3 /* SecondVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecondVC.h; sourceTree = "<group>"; };
+		99C2A2C01A3EB51900DF46F3 /* SecondVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecondVC.m; sourceTree = "<group>"; };
+		99C2A2C11A3EB51900DF46F3 /* SecondVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SecondVC.xib; sourceTree = "<group>"; };
+		99C2A2C61A3EB56B00DF46F3 /* ThirdVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThirdVC.h; sourceTree = "<group>"; };
+		99C2A2C71A3EB56B00DF46F3 /* ThirdVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThirdVC.m; sourceTree = "<group>"; };
+		99C2A2C81A3EB56B00DF46F3 /* ThirdVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ThirdVC.xib; sourceTree = "<group>"; };
 		99C403BB1A382A370057E62C /* BlueViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlueViewController.h; sourceTree = "<group>"; };
 		99C403BC1A382A370057E62C /* BlueViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlueViewController.m; sourceTree = "<group>"; };
 		99C403BD1A382A370057E62C /* BlueViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BlueViewController.xib; sourceTree = "<group>"; };
@@ -120,6 +136,46 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9963BACA1A3E799B004694DC /* PanBackNavVC */ = {
+			isa = PBXGroup;
+			children = (
+				9963BACB1A3E79F6004694DC /* Animator.h */,
+				9963BACC1A3E79F6004694DC /* Animator.m */,
+				9963BAC71A3E7999004694DC /* PanBackNavController.h */,
+				9963BAC81A3E7999004694DC /* PanBackNavController.m */,
+			);
+			name = PanBackNavVC;
+			sourceTree = "<group>";
+		};
+		99C2A2BE1A3EB4FF00DF46F3 /* VCS */ = {
+			isa = PBXGroup;
+			children = (
+				99C2A2C51A3EB55800DF46F3 /* ThirdVC */,
+				99C2A2C41A3EB51D00DF46F3 /* SecondVC */,
+			);
+			name = VCS;
+			sourceTree = "<group>";
+		};
+		99C2A2C41A3EB51D00DF46F3 /* SecondVC */ = {
+			isa = PBXGroup;
+			children = (
+				99C2A2BF1A3EB51900DF46F3 /* SecondVC.h */,
+				99C2A2C01A3EB51900DF46F3 /* SecondVC.m */,
+				99C2A2C11A3EB51900DF46F3 /* SecondVC.xib */,
+			);
+			name = SecondVC;
+			sourceTree = "<group>";
+		};
+		99C2A2C51A3EB55800DF46F3 /* ThirdVC */ = {
+			isa = PBXGroup;
+			children = (
+				99C2A2C61A3EB56B00DF46F3 /* ThirdVC.h */,
+				99C2A2C71A3EB56B00DF46F3 /* ThirdVC.m */,
+				99C2A2C81A3EB56B00DF46F3 /* ThirdVC.xib */,
+			);
+			name = ThirdVC;
+			sourceTree = "<group>";
+		};
 		99C403C01A382A3D0057E62C /* Blue */ = {
 			isa = PBXGroup;
 			children = (
@@ -172,6 +228,8 @@
 		99C46BDB1A38270F00EC32E0 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				99C2A2BE1A3EB4FF00DF46F3 /* VCS */,
+				9963BACA1A3E799B004694DC /* PanBackNavVC */,
 				99C403D71A38630A0057E62C /* ZQHTabBarController */,
 				99C403CD1A382A710057E62C /* Green */,
 				99C403C71A382A5A0057E62C /* Yellow */,
@@ -340,7 +398,9 @@
 				99C403BF1A382A370057E62C /* BlueViewController.xib in Resources */,
 				99C403E31A387A850057E62C /* first_normal.png in Resources */,
 				99C403DF1A387A4A0057E62C /* first_selected@2x.png in Resources */,
+				99C2A2C31A3EB51900DF46F3 /* SecondVC.xib in Resources */,
 				99C403D21A382A7F0057E62C /* GreenViewController.xib in Resources */,
+				99C2A2CA1A3EB56B00DF46F3 /* ThirdVC.xib in Resources */,
 				CB9B18CD14A9D2B600C15033 /* InfoPlist.strings in Resources */,
 				99C403F21A39711E0057E62C /* third_normal.png in Resources */,
 				99C403DE1A387A4A0057E62C /* first_selected.png in Resources */,
@@ -389,10 +449,14 @@
 			files = (
 				CB9B18CF14A9D2B600C15033 /* main.m in Sources */,
 				CB9B18D314A9D2B600C15033 /* AppDelegate.m in Sources */,
+				9963BAC91A3E7999004694DC /* PanBackNavController.m in Sources */,
 				99C403CB1A382A6E0057E62C /* YellowViewController.m in Sources */,
 				99C403BE1A382A370057E62C /* BlueViewController.m in Sources */,
+				99C2A2C91A3EB56B00DF46F3 /* ThirdVC.m in Sources */,
+				9963BACD1A3E79F6004694DC /* Animator.m in Sources */,
 				CB9B18D614A9D2B600C15033 /* ZQHTabBarController.m in Sources */,
 				99C403D11A382A7F0057E62C /* GreenViewController.m in Sources */,
+				99C2A2C21A3EB51900DF46F3 /* SecondVC.m in Sources */,
 				99C403C51A382A570057E62C /* RedViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -7,11 +7,11 @@
 //
 
 #import "AppDelegate.h"
-#import "ZQHTabBarController.h"
 #import "BlueViewController.h"
 #import "RedViewController.h"
 #import "YellowViewController.h"
 #import "GreenViewController.h"
+#import "PanBackNavController.h"
 
 @implementation AppDelegate
 
@@ -34,10 +34,14 @@
     
     [tabBarController setControllers:[NSArray arrayWithObjects:blueVC,redVC,yellowVC,greenVC, nil]];
     [tabBarController setTabBarItems:[NSArray arrayWithObjects:item1,item2,item3,item4, nil]];
-    [tabBarController.navigationItem setTitle:@"title"];
+    [tabBarController setTitleChangedAutomatically:NO];
+    [tabBarController setTabBarItemAnimatableWhenClicked:NO];
+    [tabBarController setTabBarItemAnimatableWhenScrolled:YES];
+    [tabBarController setScrollEnabled:YES];
     
-    UINavigationController *nav=[[UINavigationController alloc]initWithRootViewController:tabBarController];
+    PanBackNavController *nav=[[PanBackNavController alloc]initWithRootViewController:tabBarController];
     self.window.rootViewController = nav;
+    [self.window setBackgroundColor:[UIColor whiteColor]];
     [self.window makeKeyAndVisible];
     return YES;
 }

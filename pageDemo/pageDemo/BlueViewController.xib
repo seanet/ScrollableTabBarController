@@ -61,15 +61,30 @@
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="msU-LV-xnj">
+                    <rect key="frame" x="277" y="325" width="46" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="46" id="Qpb-Ya-WmG"/>
+                        <constraint firstAttribute="height" constant="30" id="cR0-9h-7m9"/>
+                    </constraints>
+                    <state key="normal" title="Button">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="click:" destination="-1" eventType="touchUpInside" id="02m-Vm-xRm"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" red="0.4378309033901332" green="0.74191554298466333" blue="1" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstItem="7Xz-SC-mou" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="17o-kE-krp"/>
                 <constraint firstItem="7Xz-SC-mou" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="8" id="AL1-MN-g4t"/>
                 <constraint firstAttribute="centerY" secondItem="5qa-nw-fw2" secondAttribute="centerY" id="CRc-dc-SKX"/>
+                <constraint firstAttribute="centerX" secondItem="msU-LV-xnj" secondAttribute="centerX" id="Qer-0A-HEn"/>
                 <constraint firstAttribute="trailing" secondItem="bIl-Ze-vVp" secondAttribute="trailing" constant="8" id="Rhr-Gp-wIO"/>
                 <constraint firstAttribute="trailing" secondItem="lr5-Ks-gRZ" secondAttribute="trailing" constant="8" id="btu-Gi-wXt"/>
                 <constraint firstAttribute="bottom" secondItem="bIl-Ze-vVp" secondAttribute="bottom" constant="8" id="eWm-Jg-V3b"/>
+                <constraint firstItem="msU-LV-xnj" firstAttribute="top" secondItem="5qa-nw-fw2" secondAttribute="bottom" constant="15" id="lPX-LA-m1c"/>
                 <constraint firstAttribute="centerX" secondItem="5qa-nw-fw2" secondAttribute="centerX" id="m5R-WP-xTx"/>
                 <constraint firstAttribute="bottom" secondItem="OC3-oo-tYq" secondAttribute="bottom" constant="8" id="sXT-IW-p7d"/>
                 <constraint firstItem="OC3-oo-tYq" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="vFm-EG-V98"/>

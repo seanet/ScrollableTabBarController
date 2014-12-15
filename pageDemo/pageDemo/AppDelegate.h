@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ZQHTabBarController.h"
 
 @class ViewController;
 

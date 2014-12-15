@@ -7,6 +7,8 @@
 //
 
 #import "BlueViewController.h"
+#import "AppDelegate.h"
+#import "SecondVC.h"
 
 @interface BlueViewController ()
 
@@ -16,6 +18,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [self.navigationItem setTitle:@"blue"];
+}
+
+- (IBAction)click:(id)sender {
+    SecondVC *vc=[[SecondVC alloc]init];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 @end
